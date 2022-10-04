@@ -1,7 +1,9 @@
 const {
   Client
 } = require('pg')
-
+const express = require('express')
+const app = express()
+app.use(express.json())
 const client = new Client({
   user: '',
   host: 'motty.db.elephantsql.com',
@@ -9,13 +11,30 @@ const client = new Client({
   password: '',
   port: '5432'
 });
+//GET http://localhost:3000/medicos
+app.get('/medicos', async (req, res) =>{
+  client.connect()
+  const { rows } = await client.query('SELECT * FROM tb_medico')
+  console.log(rows)
+  res.send('ok')
+})
+app.listen(3000, () => console.log('Executando...'))
 
-teste = async ()  => {
-  await client.connect()
-  console.log('foi')
-}
 
-teste()
+
+
+
+
+
+
+
+
+// teste = async ()  => {
+//   await client.connect()
+//   console.log('foi')
+// }
+
+// teste()
 
 
 
